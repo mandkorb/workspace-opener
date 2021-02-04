@@ -15,7 +15,11 @@ def add_app():
 
     filename = filedialog.askopenfilename(initialdir="/", title="Select App",
                     filetypes=(("apps", "*.exe"), ("*all files", ".")))   
-    apps.append(filename)
+    
+    if filename not in apps and len(filename) > 6:
+        apps.append(filename)
+    else:
+        pass
 
     for app in apps:
         app_path_label = tk.Label(apps_frame, text=app).pack(pady=5)
@@ -27,7 +31,7 @@ def run_apps():
 def open_from_txt():
     apps_in_file = filedialog.askopenfilename(initialdir="/", title="Select FIle",
                     filetypes=(("text", "*.txt"), ("*all files", ".")))
-
+                    
     with open(apps_in_file, "r") as f:
         for path in f:
             temp_apps = [elt.strip() for elt in path.split(',')]
