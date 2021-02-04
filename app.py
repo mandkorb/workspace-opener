@@ -18,17 +18,22 @@ def add_app():
     
     if filename not in apps and len(filename) > 6:
         apps.append(filename)
+        for app in apps:
+            app_path_label = tk.Label(apps_frame, text=app).pack(pady=5)
     else:
         pass
-
-    for app in apps:
-        app_path_label = tk.Label(apps_frame, text=app).pack(pady=5)
+    
     
 def run_apps():
     for app in apps:
         os.startfile(app)
 
 def open_from_txt():
+    if len(apps) > 0:
+        apps.clear()
+        for app in apps_frame.winfo_children():
+            app.destroy()
+        
     apps_in_file = filedialog.askopenfilename(initialdir="/", title="Select FIle",
                     filetypes=(("text", "*.txt"), ("*all files", ".")))
                     
@@ -36,11 +41,9 @@ def open_from_txt():
         for path in f:
             temp_apps = [elt.strip() for elt in path.split(',')]
             
-    for item in temp_apps:
-        apps.append(item)
-    
-    for app in apps:
-        app_path_label = tk.Label(apps_frame, text=app).pack(pady=5)     
+    for app in temp_apps:
+        apps.append(app)
+        app_path_label = tk.Label(apps_frame, text=app).pack(pady=5)             
 
 def save_to_file():
     if len(apps) != 0:
